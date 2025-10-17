@@ -17,6 +17,17 @@ axios
 cors
 dotenv
 
+### Environment variable
+
+PORT="your preferred port" ==> mine was 5000
+USER_EMAIL="my email" ==> use yours in interested
+USER_NAME="my name" ==> use your name also in needed
+
+### Instructions to run locally
+
+run the command "npm install" - installs all dependencies
+run the command "npm start" - start the server
+
 ### Example Response
 
 ```json
