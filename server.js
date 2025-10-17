@@ -39,7 +39,7 @@ server.get("/me", async (req, res) => {
         stack: "Node.js/Express",
       },
       timestamp: new Date().toISOString(),
-      error: "Failed to fetch cat fact",
+      fact: "Failed to fetch cat fact",
     });
   }
 });
