@@ -28,6 +28,8 @@ USER_NAME="my name" ==> use your name also in needed
 run the command "npm install" - installs all dependencies
 run the command "npm start" - start the server
 
+visit: http://localhost:5000/me
+
 ### Example Response
 
 ```json

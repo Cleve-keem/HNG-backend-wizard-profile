@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Backend Wizard Profile — API Documentation</title>
+    <style>
+      :root {
+        --bg: #0f1724;
+        --card: #071025;
+        --accent: #5eead4;
+        --muted: #94a3b8;
+        --glass: rgba(255, 255, 255, 0.03);
+        --maxw: 900px;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+          "Courier New", monospace;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+        background: linear-gradient(180deg, var(--bg), #071028 120%);
+        color: #e6eef6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        padding: 40px 20px;
+      }
+      .container {
+        max-width: var(--maxw);
+        margin: 0 auto;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), #60a5fa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: #04263b;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0;
+      }
+      p.lead {
+        margin: 6px 0 0;
+        color: var(--muted);
+      }
+
+      .card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 18px;
+        box-shadow: 0 6px 20px rgba(2, 6, 23, 0.6);
+      }
+      h2 {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+      }
+      .meta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 18px;
+      }
+      @media (max-width: 980px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      pre {
+        background: var(--glass);
+        padding: 14px;
+        border-radius: 8px;
+        overflow: auto;
+        font-family: var(--mono);
+        color: #dbeafe;
+        font-size: 13px;
+      }
+      code {
+        font-family: var(--mono);
+        font-size: 13px;
+      }
+
+      .section {
+        margin-top: 10px;
+      }
+      .label {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 6px 10px;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .props {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .prop {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.01);
+        border-radius: 8px;
+      }
+      .prop .left {
+        font-size: 13px;
+      }
+      .prop .right {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .btn {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 8px 10px;
+        border-radius: 8px;
+        color: var(--accent);
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn.small {
+        padding: 6px 8px;
+        font-size: 13px;
+      }
+
+      footer {
+        margin-top: 26px;
+        color: var(--muted);
+        font-size: 13px;
+        text-align: center;
+      }
+
+      /* copy badge */
+      .copy-btn {
+        float: right;
+        margin-top: -6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="brand">
+          <div class="logo">BW</div>
+          <div>
+            <h1>Backend Wizard Profile — API Documentation</h1>
+            <p class="lead">
+              Single endpoint service returning developer profile info and a cat
+              fact (third-party powered).
+            </p>
+          </div>
+        </div>
+        <div class="meta">
+          <div class="label">Node.js / Express</div>
+          <div class="label">Axios</div>
+          <div class="label">CORS enabled</div>
+        </div>
+      </header>
+
+      <div class="grid">
+        <main>
+          <section class="card">
+            <h2>Overview</h2>
+            <p class="section">
+              This small API exposes one endpoint, <code>/me</code>. It returns
+              profile metadata (from environment variables) together with a cat
+              fact fetched from
+              <a
+                href="https://catfact.ninja"
+                target="_blank"
+                style="color: var(--accent)"
+                >catfact.ninja</a
+              >. The service is resilient: when the external API fails, a
+              fallback response is returned.
+            </p>
+
+            <div class="section">
+              <h2>Quick start</h2>
+              <ol style="margin: 8px 0 0 18px; color: var(--muted)">
+                <li>Install dependencies: <code>npm install</code></li>
+                <li>
+                  Create a <code>.env</code> file with required variables
+                  (example below)
+                </li>
+                <li>
+                  Run: <code>npm start</code> or <code>node server.js</code>
+                </li>
+              </ol>
+            </div>
+
+            <div class="section">
+              <h2>Environment variables</h2>
+              <pre><code>USER_NAME=Your Name
+USER_EMAIL=you@example.com
+PORT=5000 (optional)</code></pre>
+            </div>
+
+            <div class="section">
+              <h2>Endpoint — GET /me</h2>
+              <p style="color: var(--muted)">
+                Returns the developer profile and a cat fact. No authentication
+                required.
+              </p>
+
+              <div class="props" style="margin-top: 12px">
+                <div class="prop">
+                  <div class="left">Method</div>
+                  <div class="right">GET</div>
+                </div>
+                <div class="prop">
+                  <div class="left">URL</div>
+                  <div class="right">/me</div>
+                </div>
+                <div class="prop">
+                  <div class="left">Auth</div>
+                  <div class="right">None</div>
+                </div>
+                <div class="prop">
+                  <div class="left">Timeout</div>
+                  <div class="right">External fetch 5s</div>
+                </div>
+              </div>
+
+              <h3 style="margin-top: 14px">Success response (200)</h3>
+              <pre id="resp-success"><code>{
+  "status": "success",
+  "user": {
+    "email": "you@example.com",
+    "name": "Your Name",
+    "stack": "Node.js/Express"
+  },
+  "timestamp": "2025-10-17T12:34:56.789Z",
+  "fact": "Cats have five toes on their front paws..."
+}</code></pre>
+              <button class="btn small copy-btn" data-copy="resp-success">
+                Copy JSON
+              </button>
+
+              <h3 style="margin-top: 12px">Fallback response (200)</h3>
+              <pre id="resp-fallback"><code>{
+  "status": "success",
+  "user": { ... },
+  "timestamp": "2025-10-17T12:34:56.789Z",
+  "error": "Failed to fetch cat fact"
+}</code></pre>
+              <button class="btn small copy-btn" data-copy="resp-fallback">
+                Copy JSON
+              </button>
+            </div>
+
+            <div class="section">
+              <h2>Examples</h2>
+              <p style="color: var(--muted)">
+                Use curl to query the endpoint locally:
+              </p>
+              <pre
+                id="curl-example"
+              ><code>curl -i http://localhost:5000/me</code></pre>
+              <button class="btn small" data-copy="curl-example">
+                Copy curl
+              </button>
+
+              <p style="color: var(--muted); margin-top: 10px">Node (fetch):</p>
+              <pre><code>fetch('http://localhost:5000/me')
+  .then(r =&gt; r.json())
+  .then(console.log)
+</code></pre>
+            </div>
+
+            <div class="section">
+              <h2>Notes & recommendations</h2>
+              <ul style="color: var(--muted)">
+                <li>
+                  Current implementation returns HTTP 200 even when the external
+                  API fails — consider returning 502 or 503 to surface external
+                  dependency failures.
+                </li>
+                <li>
+                  Restrict CORS in production rather than allowing all origins.
+                </li>
+                <li>
+                  Add a health endpoint (e.g., <code>GET /health</code>) for
+                  load balancers and uptime checks.
+                </li>
+                <li>
+                  When expanding the API, add request validation and
+                  unit/integration tests (Jest + Supertest).
+                </li>
+              </ul>
+            </div>
+          </section>
+        </main>
+
+        <aside>
+          <div class="card">
+            <h2>Project</h2>
+            <p style="color: var(--muted)">Files of interest</p>
+            <div class="prop" style="margin-top: 8px">
+              <div class="left">Main</div>
+              <div class="right"><code>server.js</code></div>
+            </div>
+            <div class="prop">
+              <div class="left">Documentation</div>
+              <div class="right"><code>documentation.html</code></div>
+            </div>
+            <div class="prop">
+              <div class="left">Dependencies</div>
+              <div class="right">express, axios, cors, dotenv</div>
+            </div>
+
+            <hr
+              style="
+                border: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.03);
+                margin: 12px 0;
+              "
+            />
+
+            <h2>Response schema</h2>
+            <pre><code>{
+  status: string,
+  user: { email: string, name: string, stack: string },
+  timestamp: string (ISO),
+  fact?: string,
+  error?: string
+}</code></pre>
+          </div>
+
+          <div class="card" style="margin-top: 14px">
+            <h2>Environment</h2>
+            <p style="color: var(--muted)">
+              Place a <code>.env</code> file at the project root.
+            </p>
+            <pre><code>USER_NAME=Your Name
+USER_EMAIL=you@example.com
+PORT=5000</code></pre>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        Generated API documentation — Backend Wizard Profile. For updates, edit
+        <code>documentation.html</code>.
+      </footer>
+    </div>
+
+    <script>
+      // simple copy-to-clipboard for code blocks
+      function copyTextFromElement(el) {
+        const text = el.innerText;
+        return navigator.clipboard
+          ? navigator.clipboard.writeText(text)
+          : (function () {
+              const ta = document.createElement("textarea");
+              ta.value = text;
+              document.body.appendChild(ta);
+              ta.select();
+              document.execCommand("copy");
+              ta.remove();
+              return Promise.resolve();
+            })();
+      }
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-copy");
+          const el = document.getElementById(id);
+          if (!el) return;
+          copyTextFromElement(el)
+            .then(() => {
+              const old = btn.innerText;
+              btn.innerText = "Copied";
+              setTimeout(() => (btn.innerText = old), 1500);
+            })
+            .catch(() => {
+              btn.innerText = "Failed";
+              setTimeout(() => (btn.innerText = "Copy JSON"), 1500);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>
