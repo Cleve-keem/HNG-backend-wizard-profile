@@ -21,8 +21,8 @@ server.get("/me", async (req, res) => {
     res.status(200).json({
       status: "success",
       user: {
-        email: process.env.USER_EMAIL,
-        name: process.env.USER_NAME,
+        email: process.env.USER_EMAIL || "hakeembello983@gmail.com",
+        name: process.env.USER_NAME || "Hakeem Bello",
         stack: "Node.js/Express",
       },
       timestamp: new Date().toISOString(),
@@ -34,8 +34,8 @@ server.get("/me", async (req, res) => {
     res.status(200).json({
       status: "success",
       user: {
-        email: process.env.USER_EMAIL,
-        name: process.env.USER_NAME,
+        email: process.env.USER_EMAIL || "hakeembello983@gmail.com",
+        name: process.env.USER_NAME || "Hakeem Bello",
         stack: "Node.js/Express",
       },
       timestamp: new Date().toISOString(),
