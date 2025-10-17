@@ -12,7 +12,7 @@ Demo: https://cleve-keem.github.io/HNG-backend-wizard-profile/
 - CORS enabled for easy local testing
 - Configurable via environment variables
 
-## Quick Links
+## Documentation
 
 - Live demo / hosted docs: https://cleve-keem.github.io/HNG-backend-wizard-profile/
 - Local documentation: `index.html` (included in repo)
