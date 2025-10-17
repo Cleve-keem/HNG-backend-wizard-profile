@@ -100,7 +100,7 @@ Fallback response when the external API fails (HTTP 200 in current implementatio
     "stack": "Node.js/Express"
   },
   "timestamp": "2025-10-17T12:34:56.789Z",
-  "error": "Failed to fetch cat fact"
+  "fact": "Failed to fetch cat fact"
 }
 ```
 
