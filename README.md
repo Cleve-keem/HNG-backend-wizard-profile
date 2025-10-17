@@ -1,46 +1,127 @@
-# Backend Wizards — Stage 0 Task
+# Backend Wizard Profile
 
-## 🚀 Dynamic Profile Endpoint
+A minimal Node.js + Express API that exposes a single dynamic profile endpoint. The endpoint returns developer metadata (from environment variables) and a cat fact fetched from the public API at https://catfact.ninja.
 
-### Endpoint
+Demo: https://cleve-keem.github.io/HNG-backend-wizard-profile/
 
-GET `/me`
+## Features
 
-### Description
+- Single endpoint: GET /me
+- Returns profile information (name, email, stack) and a cat fact
+- Uses Axios to fetch the cat fact with a 5s timeout
+- CORS enabled for easy local testing
+- Configurable via environment variables
 
-Returns your profile details with a dynamically fetched cat fact.
+## Quick Links
 
-### Dependencies
+- Live demo / hosted docs: https://cleve-keem.github.io/HNG-backend-wizard-profile/
+- Local documentation: `index.html` (included in repo)
 
-express
-axios
-cors
-dotenv
+## Requirements
 
-### Environment variable
+- Node.js v22+ (recommended: latest LTS)
+- npm
 
-PORT="your preferred port" ==> mine was 5000
-USER_EMAIL="my email" ==> use yours in interested
-USER_NAME="my name" ==> use your name also in needed
+## Installation
 
-### Instructions to run locally
+1. Clone the repository
 
-run the command "npm install" - installs all dependencies
-run the command "npm start" - start the server
+   git clone https://github.com/Cleve-keem/HNG-backend-wizard-profile
 
-visit: http://localhost:5000/me
+2. Install dependencies
 
-### Example Response
+   npm install
+
+3. Create a `.env` file in the project root (see Environment variables)
+
+4. Start the server
+
+   npm start
+
+(or `node server.js`)
+
+The server listens on `PORT` environment variable or defaults to `5000`.
+
+## Environment variables
+
+Create a `.env` file with the following values:
+
+```
+USER_NAME=Your Name
+USER_EMAIL=you@example.com
+PORT=5000
+```
+
+## Usage
+
+Once the server is running, open:
+
+http://localhost:5000/me
+
+Example curl:
+
+```
+curl -i http://localhost:5000/me
+```
+
+### Endpoint: GET /me
+
+Description: Returns developer profile and a cat fact fetched from a third-party API.
+
+Request:
+
+- Method: GET
+- Path: `/me`
+- Auth: Hakeem Bello
+
+Successful response (HTTP 200):
 
 ```json
 {
   "status": "success",
   "user": {
     "email": "hakeembello983@gmail.com",
-    "name": "Bello Hakeem",
+    "name": "Hakeem Bello",
     "stack": "Node.js/Express"
   },
-  "timestamp": "2025-10-15T12:34:56.789Z",
-  "fact": "random facts about cats"
+  "timestamp": "2025-10-17T12:34:56.789Z",
+  "fact": "Cats have five toes on their front paws..."
 }
 ```
+
+Fallback response when the external API fails (HTTP 200 in current implementation):
+
+```json
+{
+  "status": "success",
+  "user": {
+    "email": "hakeembello983@gmail.com",
+    "name": "Hakeem Bello",
+    "stack": "Node.js/Express"
+  },
+  "timestamp": "2025-10-17T12:34:56.789Z",
+  "error": "Failed to fetch cat fact"
+}
+```
+
+Notes:
+
+- The current implementation returns HTTP 200 for both success and fallback responses. Consider returning 5xx codes (e.g., 502) to surface dependency failures.
+- CORS is enabled for all origins; restrict in production.
+
+## Development & Recommendations
+
+- Add a health endpoint (e.g., `GET /health`) for readiness/liveness checks
+- Add automated tests (Jest + Supertest) for the endpoint
+- Use a process manager (PM2) or containerize for production deployment
+
+## Dependencies
+
+- express
+- axios
+- cors
+- dotenv
+
+## Author
+
+Hakeem Bello
